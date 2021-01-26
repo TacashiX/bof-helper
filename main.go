@@ -51,7 +51,7 @@ func main() {
 					},
 				},
 				Action: func(c *cli.Context) error {
-					conf := Config{Host: c.String("ip"), Port: c.Int("port"), Cmd: c.String("cmd"), MsfPath: c.String("msfpath")}
+					conf := Config{Host: c.String("ip"), Port: c.Int("port"), Cmd: c.String("cmd"), MsfPath: c.String("msfpath"), Timeout: c.Int("timeout")}
 					saveConfig(conf, configName)
 					return nil
 				},

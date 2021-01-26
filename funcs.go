@@ -210,8 +210,8 @@ func execute(c Config, e Exploit) {
 }
 
 func sendPayload(conf Config, payload string) error {
-	conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", conf.Host, conf.Port))
-	conn.SetDeadline(time.Now().Add(time.Duration(conf.Timeout) * time.Second))
+	conn, err := net.DialTimeout("tcp", fmt.Sprintf("%s:%d", conf.Host, conf.Port), time.Duration(conf.Timeout)*time.Second)
+	//conn.SetDeadline(time.Now().Add(time.Duration(conf.Timeout) * time.Second))
 	defer conn.Close()
 	if err != nil {
 		return err
