@@ -210,17 +210,19 @@ func execute(c Config, e Exploit) {
 }
 
 func sendPayload(conf Config, payload string) error {
-	d := net.Dialer{Timeout: time.Duration(conf.Timeout) * time.Second, Deadline: time.Now().Add(time.Duration(conf.Timeout) * time.Second)}
-	conn, err := d.Dial("tcp", fmt.Sprintf("%s:%d", conf.Host, conf.Port))
+	conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", conf.Host, conf.Port))
 	if err != nil {
 		return err
 	}
+	//conn.SetDeadline(time.Now().Add(time.Duration(conf.Timeout) * time.Second))
 	defer conn.Close()
-	reply := make([]byte, 1024)
-	_, err = conn.Read(reply)
-	if err != nil {
-		return err
-	}
+	/*
+		reply := make([]byte, 1024)
+		_, err = conn.Read(reply)
+		if err != nil {
+			return err
+		}
+	*/
 	_, err = fmt.Fprintf(conn, payload+"\r\n")
 	if err != nil {
 		return err
