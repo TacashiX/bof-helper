@@ -214,15 +214,15 @@ func sendPayload(conf Config, payload string) error {
 	if err != nil {
 		return err
 	}
-	//conn.SetDeadline(time.Now().Add(time.Duration(conf.Timeout) * time.Second))
+	conn.SetDeadline(time.Now().Add(time.Duration(conf.Timeout) * time.Second))
 	defer conn.Close()
-	/*
-		reply := make([]byte, 1024)
-		_, err = conn.Read(reply)
-		if err != nil {
-			return err
-		}
-	*/
+
+	reply := make([]byte, 1024)
+	_, err = conn.Read(reply)
+	if err != nil {
+		return err
+	}
+
 	_, err = fmt.Fprintf(conn, payload+"\r\n")
 	if err != nil {
 		return err
