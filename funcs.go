@@ -98,8 +98,7 @@ func offset(c Config, n int, v bool) int {
 
 	//Send payload
 	fmt.Printf("Sending payload to %s:%d with command: %s..."+"\n", c.Host, c.Port, c.Cmd)
-	//err = sendPayload(c, fmt.Sprintf("%s %s", c.Cmd, pattern))
-	err = sendPayload(c, fmt.Sprintf("%s", pattern))
+	err = sendPayload(c, fmt.Sprintf("%s%s", c.Cmd, pattern))
 	if err != nil {
 		log.Fatal(err)
 	}
