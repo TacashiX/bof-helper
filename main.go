@@ -190,7 +190,7 @@ func main() {
 						fmt.Println("Error loading config. Please verify that bof-config.json is present and populated.")
 						log.Fatal(err)
 					}
-					generate(conf.(Config), c.Int("offset"), c.String("jmp"), c.String("badchars"), c.String("payload"), c.Bool("send"), c.String("ip"), c.Int("port"))
+					generate(conf.(Config), c.Int("offset"), c.String("jmp"), c.String("badchars"), c.String("payload-type"), c.Bool("send"), c.String("ip"), c.Int("port"))
 					return nil
 				},
 			},
