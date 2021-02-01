@@ -161,8 +161,8 @@ func main() {
 						Required: true,
 					},
 					&cli.StringFlag{
-						Name:    "payload",
-						Aliases: []string{"p"},
+						Name:    "payload-type",
+						Aliases: []string{"pt"},
 						Value:   "windows/shell_reverse_tcp",
 						Usage:   "mfsvenom payload type to use",
 					},
