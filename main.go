@@ -178,11 +178,6 @@ func main() {
 						Usage:    "local port for reverse shell",
 						Required: true,
 					},
-					&cli.BoolFlag{
-						Name:    "send",
-						Aliases: []string{"s"},
-						Usage:   "set to send payload after generating",
-					},
 				},
 				Action: func(c *cli.Context) error {
 					conf, err := loadConfig(configName)

