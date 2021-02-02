@@ -152,17 +152,6 @@ OUTER:
 		log.Fatal(err)
 	}
 
-	//recurse flag
-	if r {
-		fmt.Print("Enter detected badchars or q to quit: ")
-		fmt.Scanf("%s", &b)
-		if b != "q" {
-			fmt.Println("Running badchars again")
-			badchars(c, o, b, r)
-		}
-
-	}
-
 }
 
 func generate(c Config, off int, jmp string, bad string, ptype string, send bool, ip string, port int) {
@@ -198,10 +187,6 @@ func generate(c Config, off int, jmp string, bad string, ptype string, send bool
 		log.Fatal(err)
 	}
 	fmt.Println("Exploit config saved to bof-exploit.json. Execute with:\n bof-helper execute -f bof-exploit.json")
-	//send if flag set
-	if send {
-		execute(c, e)
-	}
 }
 
 func execute(c Config, e Exploit) {

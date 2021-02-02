@@ -122,11 +122,6 @@ func main() {
 						Aliases: []string{"b"},
 						Usage:   "detected `\"BADCHARS\"`",
 					},
-					&cli.BoolFlag{
-						Name:    "recurse",
-						Aliases: []string{"r"},
-						Usage:   "set if you want to run until all badchars have been detected",
-					},
 				},
 				Action: func(c *cli.Context) error {
 					conf, err := loadConfig(configName)
