@@ -50,13 +50,13 @@ func main() {
 						Usage:   "metasploit framework path",
 					},
 					&cli.BoolFlag{
-						Name:    "welcome",
-						Aliases: []string{"w"},
+						Name:    "no-welcome",
+						Aliases: []string{"nw"},
 						Usage:   "set if program does not send message on connect",
 					},
 				},
 				Action: func(c *cli.Context) error {
-					conf := Config{Host: c.String("ip"), Port: c.Int("port"), Cmd: c.String("cmd"), MsfPath: c.String("msfpath"), Timeout: c.Int("timeout"), Welcome: c.Bool("welcome")}
+					conf := Config{Host: c.String("ip"), Port: c.Int("port"), Cmd: c.String("cmd"), MsfPath: c.String("msfpath"), Timeout: c.Int("timeout"), NoWelcome: c.Bool("no-welcome")}
 					saveConfig(conf, configName)
 					return nil
 				},

@@ -18,12 +18,12 @@ import (
 
 //Config struct
 type Config struct {
-	Host    string `json:"host"`
-	Port    int    `json:"port"`
-	Cmd     string `json:"cmd"`
-	MsfPath string `json:"msf-path"`
-	Timeout int    `json:"timeout"`
-	Welcome bool   `json:"welcome"`
+	Host      string `json:"host"`
+	Port      int    `json:"port"`
+	Cmd       string `json:"cmd"`
+	MsfPath   string `json:"msf-path"`
+	Timeout   int    `json:"timeout"`
+	NoWelcome bool   `json:"no-welcome"`
 }
 
 //Exploit struct
@@ -81,7 +81,7 @@ func fuzz(c Config, t int) int {
 			if count == 100 {
 				log.Fatal(err)
 			}
-			if c.Welcome {
+			if c.NoWelcome {
 				return count
 			}
 			return count - 100
@@ -214,7 +214,7 @@ func sendPayload(conf Config, payload string) error {
 	defer conn.Close()
 
 	reply := make([]byte, 1024)
-	if !conf.Welcome {
+	if !conf.NoWelcome {
 		_, err = conn.Read(reply)
 		if err != nil {
 			return err
@@ -226,7 +226,7 @@ func sendPayload(conf Config, payload string) error {
 		return err
 	}
 
-	if conf.Welcome {
+	if conf.NoWelcome {
 		_, err = conn.Read(reply)
 		if err != nil {
 			return err
