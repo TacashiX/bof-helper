@@ -23,6 +23,7 @@ type Config struct {
 	Cmd     string `json:"cmd"`
 	MsfPath string `json:"msf-path"`
 	Timeout int    `json:"timeout"`
+	Welcome bool   `json:"welcome"`
 }
 
 //Exploit struct
@@ -79,6 +80,9 @@ func fuzz(c Config, t int) int {
 		if err != nil {
 			if count == 100 {
 				log.Fatal(err)
+			}
+			if c.Welcome {
+				return count
 			}
 			return count - 100
 		}
@@ -209,16 +213,24 @@ func sendPayload(conf Config, payload string) error {
 	conn.SetDeadline(time.Now().Add(time.Duration(conf.Timeout) * time.Second))
 	defer conn.Close()
 
-	/*
-		reply := make([]byte, 1024)
+	reply := make([]byte, 1024)
+	if !conf.Welcome {
 		_, err = conn.Read(reply)
 		if err != nil {
 			return err
 		}
-	*/
+	}
+
 	_, err = fmt.Fprint(conn, payload+"\r\n")
 	if err != nil {
 		return err
+	}
+
+	if conf.Welcome {
+		_, err = conn.Read(reply)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
